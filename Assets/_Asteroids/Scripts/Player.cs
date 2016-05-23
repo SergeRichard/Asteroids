@@ -22,25 +22,18 @@ public class Player : MonoBehaviour {
 		
 		if (Input.GetKey (KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
 			transform.Rotate(Vector3.down * RotationSpeed * Time.deltaTime);
-//			foreach (GameObject go in Thrusters) {					
-//				go.GetComponent<ParticleSystem> ().startRotation3D.Set(0,0,45);
-//			}
+
 		}
 		if (Input.GetKey (KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
 			transform.Rotate(Vector3.up * RotationSpeed * Time.deltaTime);
-//			foreach (GameObject go in Thrusters) {					
-//				go.GetComponent<ParticleSystem> ().startRotation3D.Set(0,0,45);
-//			}
+
 		}
 		if ((Input.GetKey (KeyCode.W) || Input.GetKey (KeyCode.UpArrow))) {
 			rigidBody.AddForce (transform.forward * thrust * Time.deltaTime);
-//			foreach (GameObject go in Thrusters) {					
-//				go.SetActive (true);
-//			}
-		} else {
-//			foreach (GameObject go in Thrusters) {
-//				go.SetActive (false);
-//			}
+
+		} 
+		if (Input.GetKey (KeyCode.Space)) {
+
 		}
 		CheckBoundaries ();
 		CheckSpeed ();
