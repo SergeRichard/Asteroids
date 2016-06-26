@@ -5,16 +5,22 @@ public class Player : MonoBehaviour {
 
 	Rigidbody rigidBody;
 	Transform transform;
+	public GameObject Laser;
+	public Transform ShotSpawn;
+	public Transform PlayerLazerSpawn;
 	public float RotationSpeed;
 	public float thrust;
 	public float MaximumSpeed;
 	public GameObject[] Thrusters;
+	public float ShotDelay = .5f;
 
+	private float currentTime;
 
 	// Use this for initialization
 	void Start () {
 		rigidBody = GetComponent<Rigidbody> ();
 		transform = GetComponent<Transform> ();
+		currentTime = Time.time;
 	}
 	
 	// Update is called once per frame
@@ -32,11 +38,16 @@ public class Player : MonoBehaviour {
 			rigidBody.AddForce (transform.forward * thrust * Time.deltaTime);
 
 		} 
-		if (Input.GetKey (KeyCode.Space)) {
-
+		if (Input.GetKey (KeyCode.Space) && (Time.time - currentTime > ShotDelay)) {
+			currentTime = Time.time;
+			InstantiateLaser ();
 		}
 		CheckBoundaries ();
 		CheckSpeed ();
+	}
+	void InstantiateLaser() {
+		GameObject laser = (GameObject)Instantiate (Laser, ShotSpawn.position, Quaternion.identity);
+		laser.transform.parent = PlayerLazerSpawn;
 	}
 	void CheckBoundaries() {
 		if (transform.position.x > 7) {
