@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 	public GameObject[] Thrusters;
 	public float ShotDelay = .5f;
 
+	private bool blinkingCoroutine = false;
 	private float currentTime;
 
 	// Use this for initialization
@@ -42,8 +43,24 @@ public class Player : MonoBehaviour {
 			currentTime = Time.time;
 			InstantiateLaser ();
 		}
+		if (GameManager.GameState == GameManager.GameStates.Invincible) {
+			if (!blinkingCoroutine) {
+				GetComponent<BoxCollider> ().enabled = false;
+				StartCoroutine (playerShipBlinking ());
+			}
+		}
 		CheckBoundaries ();
 		CheckSpeed ();
+	}
+	IEnumerator playerShipBlinking() {
+		blinkingCoroutine = true;
+
+		while (true) {
+			GetComponent<MeshRenderer> ().enabled = false;
+			yield return new WaitForSeconds (.1f);
+			GetComponent<MeshRenderer> ().enabled = true;
+			yield return new WaitForSeconds (.1f);
+		}
 	}
 	void InstantiateLaser() {
 		GameObject laser = (GameObject)Instantiate (Laser, ShotSpawn.position, Quaternion.identity);
@@ -74,5 +91,9 @@ public class Player : MonoBehaviour {
 
 			rigidBody.AddForce(-brakeVelocity);  // apply opposing brake force
 		}
+	}
+	void OnCollisionEnter(Collision collision) {
+		Debug.Log (collision.collider.name);
+
 	}
 }

@@ -5,9 +5,15 @@ public class GameManager : MonoBehaviour {
 
 	public AsteroidSpawnController AsteroidSpawnController;
 
+	public enum GameStates {GameOn, PlayerDestroyed, PlayerKilled, Invincible, GameOver};
+
+	public static GameStates GameState;
+
+
 	// Use this for initialization
 	void Start () {
 		AsteroidSpawnController.SpawnAsteroids (4);
+		GameState = GameStates.Invincible;
 	}
 	
 	// Update is called once per frame
