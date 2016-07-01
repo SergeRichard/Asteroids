@@ -5,9 +5,10 @@ public class GameManager : MonoBehaviour {
 
 	public AsteroidSpawnController AsteroidSpawnController;
 
-	public enum GameStates {GameOn, PlayerDestroyed, PlayerKilled, Invincible, GameOver};
+	public enum GameStates {GameOn, PlayerKilled, Invincible, GameOver};
 
 	public static GameStates GameState;
+
 
 
 	// Use this for initialization
@@ -18,6 +19,6 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 }

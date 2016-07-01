@@ -4,7 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	Rigidbody rigidBody;
-	Transform transform;
+
 	public GameObject Laser;
 	public Transform ShotSpawn;
 	public Transform PlayerLazerSpawn;
@@ -13,20 +13,46 @@ public class Player : MonoBehaviour {
 	public float MaximumSpeed;
 	public GameObject[] Thrusters;
 	public float ShotDelay = .5f;
+	public GameObject PlayerExplosion;
 
 	private bool blinkingCoroutine = false;
+	private bool playerKilledCoroutine = false;
 	private float currentTime;
 
 	// Use this for initialization
 	void Start () {
 		rigidBody = GetComponent<Rigidbody> ();
-		transform = GetComponent<Transform> ();
+
 		currentTime = Time.time;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		switch (GameManager.GameState) {
+		case GameManager.GameStates.GameOn:
+			CheckInput ();
+			break;
+		case GameManager.GameStates.Invincible:
+			CheckInput ();
+			if (!blinkingCoroutine) {
+				GetComponent<BoxCollider> ().enabled = false;
+				StartCoroutine (PlayerShipBlinking ());
+			}
+			break;
+		case GameManager.GameStates.PlayerKilled:
+			if (!playerKilledCoroutine) {
+				StartCoroutine (PlayerKilledCoroutine ());
+
+			}
+			break;
+
+
+		}
+
+		CheckBoundaries ();
+		CheckSpeed ();
+	}
+	void CheckInput() {
 		if (Input.GetKey (KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
 			transform.Rotate(Vector3.down * RotationSpeed * Time.deltaTime);
 
@@ -43,24 +69,36 @@ public class Player : MonoBehaviour {
 			currentTime = Time.time;
 			InstantiateLaser ();
 		}
-		if (GameManager.GameState == GameManager.GameStates.Invincible) {
-			if (!blinkingCoroutine) {
-				GetComponent<BoxCollider> ().enabled = false;
-				StartCoroutine (playerShipBlinking ());
-			}
-		}
-		CheckBoundaries ();
-		CheckSpeed ();
+
 	}
-	IEnumerator playerShipBlinking() {
+	IEnumerator PlayerKilledCoroutine() {
+		playerKilledCoroutine = true;
+
+		Instantiate (PlayerExplosion, transform.position, Quaternion.identity);
+
+		GetComponent<MeshRenderer> ().enabled = false;
+
+		yield return new WaitForSeconds (2f);
+		GameManager.GameState = GameManager.GameStates.Invincible;
+		playerKilledCoroutine = false;
+		ResetToCenter ();
+	}
+	IEnumerator PlayerShipBlinking() {
 		blinkingCoroutine = true;
 
-		while (true) {
+		float startTime = Time.time;
+
+		while (Time.time - startTime < 4f) {
 			GetComponent<MeshRenderer> ().enabled = false;
 			yield return new WaitForSeconds (.1f);
 			GetComponent<MeshRenderer> ().enabled = true;
 			yield return new WaitForSeconds (.1f);
 		}
+		GameManager.GameState = GameManager.GameStates.GameOn;
+
+		GetComponent<BoxCollider> ().enabled = true;
+
+		blinkingCoroutine = false;
 	}
 	void InstantiateLaser() {
 		GameObject laser = (GameObject)Instantiate (Laser, ShotSpawn.position, Quaternion.identity);
@@ -94,6 +132,19 @@ public class Player : MonoBehaviour {
 	}
 	void OnCollisionEnter(Collision collision) {
 		Debug.Log (collision.collider.name);
+
+		GameManager.GameState = GameManager.GameStates.PlayerKilled;
+	}
+	void ResetToCenter() {
+		GetComponent<BoxCollider> ().enabled = false;
+
+
+		rigidBody.velocity = new Vector3 (0, 0, 0);
+		rigidBody.angularVelocity = new Vector3 (0, 0, 0);
+
+		transform.rotation = Quaternion.Euler (new Vector3 (0, 0, 0));
+		transform.position = new Vector3 (0, 0, 0);
+
 
 	}
 }
