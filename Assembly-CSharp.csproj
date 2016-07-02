@@ -55,6 +55,9 @@
      <Compile Include="Assets\Other\Done\Done_Scripts\Done_PlayerController.cs" />
      <Compile Include="Assets\Other\Done\Done_Scripts\Done_RandomRotator.cs" />
      <Compile Include="Assets\Other\Done\Done_Scripts\Done_WeaponController.cs" />
+     <Compile Include="Assets\_Asteroids\Scripts\Asteroid.cs" />
+     <Compile Include="Assets\_Asteroids\Scripts\AsteroidMedium.cs" />
+     <Compile Include="Assets\_Asteroids\Scripts\AsteroidSmall.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\AsteroidSpawnController.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\GameManager.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\Lazer.cs" />

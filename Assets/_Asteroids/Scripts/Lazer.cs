@@ -26,6 +26,12 @@ public class Lazer : MonoBehaviour {
 
 		CheckBoundaries ();
 	}
+	void OnCollisionEnter(Collision collision) {
+
+		Destroy (gameObject);
+
+
+	}
 	void CheckBoundaries() {
 		if (transform.position.x > 7) {
 			rigidBody.MovePosition(new Vector3(-7,transform.position.y, transform.position.z));

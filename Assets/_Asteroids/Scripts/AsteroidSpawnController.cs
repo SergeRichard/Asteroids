@@ -19,6 +19,7 @@ public class AsteroidSpawnController : MonoBehaviour {
 
 	public void SpawnAsteroids(int numOfAsteroids) {
 		for (int t = 0; t < numOfAsteroids; t++) {
+			
 			GameObject asteroid = (GameObject)Instantiate (Asteroid1, AsteroidSpawnPoints [Random.Range (0, 13)].transform.position, Quaternion.identity);
 			asteroids.Add (asteroid);
 		}
@@ -29,7 +30,8 @@ public class AsteroidSpawnController : MonoBehaviour {
 	void Update () {	
 
 		foreach (var asteroid in asteroids) {
-			CheckBoundaries (asteroid);
+			if (asteroid != null)
+				CheckBoundaries (asteroid);
 		}
 	}
 	void CheckBoundaries(GameObject asteroid) {
