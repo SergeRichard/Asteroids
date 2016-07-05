@@ -62,6 +62,7 @@
      <Compile Include="Assets\_Asteroids\Scripts\GameManager.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\Lazer.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\LevelManager.cs" />
+     <Compile Include="Assets\_Asteroids\Scripts\MessageController.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\Mover.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\Player.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\Rotator.cs" />

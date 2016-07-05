@@ -14,9 +14,13 @@ public class Player : MonoBehaviour {
 	public GameObject[] Thrusters;
 	public float ShotDelay = .5f;
 	public GameObject PlayerExplosion;
+	public static int PlayerLife = 3;
+	public MessageController MessageController;
+	public LevelManager LevelManager;
 
 	private bool blinkingCoroutine = false;
 	private bool playerKilledCoroutine = false;
+	private bool fadeGameOverCoroutine = false;
 	private float currentTime;
 
 	// Use this for initialization
@@ -24,6 +28,9 @@ public class Player : MonoBehaviour {
 		rigidBody = GetComponent<Rigidbody> ();
 
 		currentTime = Time.time;
+
+		MessageController.DisplayLives ();
+		PlayerLife = 3;
 	}
 	
 	// Update is called once per frame
@@ -36,21 +43,40 @@ public class Player : MonoBehaviour {
 			CheckInput ();
 			if (!blinkingCoroutine) {
 				GetComponent<BoxCollider> ().enabled = false;
-				StartCoroutine (PlayerShipBlinking ());
+
+				if (PlayerLife == 0) {
+					GameManager.GameState = GameManager.GameStates.GameOver;
+				} else {
+					StartCoroutine (PlayerShipBlinking ());
+				}
 			}
 			break;
 		case GameManager.GameStates.PlayerKilled:
 			if (!playerKilledCoroutine) {
 				StartCoroutine (PlayerKilledCoroutine ());
+				PlayerLife--;
+				MessageController.DisplayLives ();
 
 			}
-			break;
 
+			break;
+		case GameManager.GameStates.GameOver:
+			if (!fadeGameOverCoroutine) {
+				fadeGameOverCoroutine = true;
+				MessageController.ShowGameOver ();
+				MessageController.OnGameOverComplete += GameOverComplete;
+			}
+			break;
 
 		}
 
 		CheckBoundaries ();
 		CheckSpeed ();
+	}
+	void GameOverComplete() {
+		fadeGameOverCoroutine = false;
+		LevelManager.LoadLevel ("TitleScene");
+
 	}
 	void CheckInput() {
 		if (Input.GetKey (KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
@@ -79,7 +105,9 @@ public class Player : MonoBehaviour {
 		GetComponent<MeshRenderer> ().enabled = false;
 
 		yield return new WaitForSeconds (2f);
+
 		GameManager.GameState = GameManager.GameStates.Invincible;
+
 		playerKilledCoroutine = false;
 		ResetToCenter ();
 	}
@@ -132,6 +160,7 @@ public class Player : MonoBehaviour {
 	}
 	void OnCollisionEnter(Collision collision) {
 		Debug.Log (collision.collider.name);
+
 
 		GameManager.GameState = GameManager.GameStates.PlayerKilled;
 	}
