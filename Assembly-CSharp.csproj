@@ -68,6 +68,7 @@
      <Compile Include="Assets\_Asteroids\Scripts\Rotator.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\SuicideTimer.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\UFO.cs" />
+     <Compile Include="Assets\_Asteroids\Scripts\UFOLazer.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\UfoController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

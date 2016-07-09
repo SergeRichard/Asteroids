@@ -5,6 +5,8 @@ public class Player : MonoBehaviour {
 
 	Rigidbody rigidBody;
 
+	public AudioClip PlayerExplosionSound;
+	public AudioClip LaserSound;
 	public GameObject Laser;
 	public Transform ShotSpawn;
 	public Transform PlayerLazerSpawn;
@@ -129,6 +131,7 @@ public class Player : MonoBehaviour {
 		blinkingCoroutine = false;
 	}
 	void InstantiateLaser() {
+		AudioSource.PlayClipAtPoint (LaserSound, Vector3.zero,1f);
 		GameObject laser = (GameObject)Instantiate (Laser, ShotSpawn.position, Quaternion.identity);
 		laser.transform.parent = PlayerLazerSpawn;
 	}
@@ -160,7 +163,7 @@ public class Player : MonoBehaviour {
 	}
 	void OnCollisionEnter(Collision collision) {
 		Debug.Log (collision.collider.name);
-
+		AudioSource.PlayClipAtPoint (PlayerExplosionSound, Vector3.zero,1f);
 
 		GameManager.GameState = GameManager.GameStates.PlayerKilled;
 	}

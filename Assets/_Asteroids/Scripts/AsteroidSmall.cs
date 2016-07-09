@@ -3,9 +3,18 @@ using System.Collections;
 
 public class AsteroidSmall : MonoBehaviour {
 
+	public AudioClip SmallBang;
 
 	void OnCollisionEnter(Collision collision) {
-		if (collision.collider.tag == "Laser") {			
+		if (collision.collider.tag == "Laser" || collision.collider.tag == "UfoLaser") {	
+
+			if (collision.collider.tag == "Laser") {
+				GameManager.GameScore += 100;
+				FindObjectOfType<MessageController> ().RefreshScore ();
+			}
+
+			if (GameManager.GameState != GameManager.GameStates.GameOver)
+				AudioSource.PlayClipAtPoint (SmallBang, Vector3.zero,1f);
 
 			Destroy (gameObject);
 

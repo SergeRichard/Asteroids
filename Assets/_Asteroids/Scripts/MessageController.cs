@@ -6,6 +6,7 @@ public class MessageController : MonoBehaviour {
 	public static event GameOverComplete OnGameOverComplete;
 	public GameObject FadePlane;
 	public GameObject GameOverText;
+	public TextMesh ScoreText;
 
 	public GameObject[] Lives;
 
@@ -22,6 +23,10 @@ public class MessageController : MonoBehaviour {
 			Lives [i].SetActive (true);
 
 		}
+
+	}
+	public void RefreshScore() {
+		ScoreText.text = GameManager.GameScore.ToString ();
 
 	}
 	void ResetLivesToInActive() {
