@@ -1,15 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Asteroids\Scripts\Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Asteroids\Scripts\UfoController.cs">
     <Files>
-      <File FileName="Assets\_Asteroids\Scripts\Player.cs" Line="32" Column="37" />
-      <File FileName="Assets\_Asteroids\Scripts\MessageController.cs" Line="28" Column="39" />
-      <File FileName="Assets\_Asteroids\Scripts\AsteroidMedium.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Asteroids\Scripts\Asteroid.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Asteroids\Scripts\GameManager.cs" Line="17" Column="37" />
-      <File FileName="Assets\_Asteroids\Scripts\AsteroidSpawnController.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Asteroids\Scripts\Mover.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Asteroids\Scripts\AsteroidSmall.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Asteroids\Scripts\UfoController.cs" Line="14" Column="30" />
+      <File FileName="Assets\_Asteroids\Scripts\UFO.cs" Line="27" Column="26" />
+      <File FileName="Assets\_Asteroids\Scripts\Player.cs" Line="19" Column="35" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -17,6 +12,7 @@
       <Breakpoint file="C:\Users\Serge\Documents\GitHub\Asteroids\Assets\_Asteroids\Scripts\Player.cs" line="92" column="1" />
       <Breakpoint file="C:\Users\SergeLaptopRig\Documents\GitHub\Asteroids\Assets\_Asteroids\Scripts\Player.cs" line="65" column="1" />
       <Breakpoint file="C:\Users\SergeLaptopRig\Documents\GitHub\Asteroids\Assets\_Asteroids\Scripts\MessageController.cs" line="38" column="1" />
+      <Breakpoint file="C:\Users\SergeLaptopRig\Documents\GitHub\Asteroids\Assets\_Asteroids\Scripts\UFO.cs" line="16" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
