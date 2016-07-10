@@ -67,6 +67,7 @@
      <Compile Include="Assets\_Asteroids\Scripts\Player.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\Rotator.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\SuicideTimer.cs" />
+     <Compile Include="Assets\_Asteroids\Scripts\TitleAsteroids.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\UFO.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\UFOLazer.cs" />
      <Compile Include="Assets\_Asteroids\Scripts\UfoController.cs" />

@@ -7,6 +7,7 @@ public class MessageController : MonoBehaviour {
 	public GameObject FadePlane;
 	public GameObject GameOverText;
 	public TextMesh ScoreText;
+	public TextMesh HighScoreValue;
 
 	public GameObject[] Lives;
 

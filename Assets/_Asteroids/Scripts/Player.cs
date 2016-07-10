@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
 
 	public AudioClip PlayerExplosionSound;
 	public AudioClip LaserSound;
+	public AudioClip ThrustSound;
 	public GameObject Laser;
 	public Transform ShotSpawn;
 	public Transform PlayerLazerSpawn;
@@ -24,6 +25,11 @@ public class Player : MonoBehaviour {
 	private bool playerKilledCoroutine = false;
 	private bool fadeGameOverCoroutine = false;
 	private float currentTime;
+	private AudioSource audioSource;
+
+	void Awake() {
+		audioSource = GetComponent<AudioSource> ();
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -32,6 +38,7 @@ public class Player : MonoBehaviour {
 		currentTime = Time.time;
 
 		MessageController.DisplayLives ();
+		MessageController.RefreshScore ();
 		PlayerLife = 3;
 	}
 	
@@ -53,6 +60,11 @@ public class Player : MonoBehaviour {
 				}
 			}
 			break;
+		case GameManager.GameStates.NextLevel:
+			ResetToCenter ();
+			StartCoroutine (PlayerShipBlinking ());
+			CheckInput ();
+			break;
 		case GameManager.GameStates.PlayerKilled:
 			if (!playerKilledCoroutine) {
 				StartCoroutine (PlayerKilledCoroutine ());
@@ -63,6 +75,13 @@ public class Player : MonoBehaviour {
 
 			break;
 		case GameManager.GameStates.GameOver:
+			int HighScore = int.Parse(MessageController.HighScoreValue.text);
+
+			if (GameManager.GameScore > HighScore) {
+				PlayerPrefs.SetInt ("High Score", GameManager.GameScore);
+				PlayerPrefs.Save ();
+			}
+			GetComponent<BoxCollider> ().enabled = false;
 			if (!fadeGameOverCoroutine) {
 				fadeGameOverCoroutine = true;
 				MessageController.ShowGameOver ();
@@ -77,6 +96,9 @@ public class Player : MonoBehaviour {
 	}
 	void GameOverComplete() {
 		fadeGameOverCoroutine = false;
+
+
+
 		LevelManager.LoadLevel ("TitleScene");
 
 	}
@@ -91,7 +113,11 @@ public class Player : MonoBehaviour {
 		}
 		if ((Input.GetKey (KeyCode.W) || Input.GetKey (KeyCode.UpArrow))) {
 			rigidBody.AddForce (transform.forward * thrust * Time.deltaTime);
+			if (!audioSource.isPlaying) {
+				audioSource.clip = ThrustSound;
+				audioSource.Play ();
 
+			}
 		} 
 		if (Input.GetKey (KeyCode.Space) && (Time.time - currentTime > ShotDelay)) {
 			currentTime = Time.time;

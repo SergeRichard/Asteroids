@@ -9,6 +9,7 @@ public class AsteroidSpawnController : MonoBehaviour {
 	public GameObject Asteroid1;
 	public GameObject Asteroid2;
 	public GameObject Asteroid3;
+	public GameObject Asteroids;
 
 	private List<GameObject> asteroids = new List<GameObject>();
 
@@ -21,6 +22,7 @@ public class AsteroidSpawnController : MonoBehaviour {
 		for (int t = 0; t < numOfAsteroids; t++) {
 			
 			GameObject asteroid = (GameObject)Instantiate (Asteroid1, AsteroidSpawnPoints [Random.Range (0, 13)].transform.position, Quaternion.identity);
+			asteroid.transform.parent = Asteroids.transform;
 			asteroids.Add (asteroid);
 		}
 
@@ -34,6 +36,11 @@ public class AsteroidSpawnController : MonoBehaviour {
 				CheckBoundaries (asteroid);
 		}
 	}
+
+	public int AsteroidCount() {
+		return Asteroids.transform.childCount;
+	}
+
 	void CheckBoundaries(GameObject asteroid) {
 		Rigidbody rigidBody = asteroid.GetComponent<Rigidbody> ();
 
